@@ -1,0 +1,29 @@
+.box {
+	height: 70px;
+	width: 70px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	background-color: #03564a;
+	color: white;
+	margin: 5px;
+	box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+	cursor: pointer;
+	font-weight: bold;
+	border: none;
+	font-size: 50px;
+	border-radius: 10px;
+	flex-shrink: 0;
+ 
+	&:hover {
+	  filter: saturate(2);
+	}
+ 
+	&.used {
+	  background-color: lightgray; // Использованный блок
+ 
+	  &:hover {
+		 filter: saturate(2);
+	  }
+	}
+ }

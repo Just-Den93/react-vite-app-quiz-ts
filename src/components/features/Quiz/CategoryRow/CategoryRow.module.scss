@@ -1,0 +1,70 @@
+.contentContainer {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	padding: 20px;
+	border-radius: 10px;
+	width: 100%;
+	max-width: 1200px;
+	margin: auto;
+ }
+ 
+ .item {
+	height: 70px;
+	width: 70px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	background-color: #7958af;
+	color: white;
+	margin: 5px;
+	box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+	cursor: pointer;
+	font-weight: bold;
+	border: none;
+	font-size: 50px;
+	border-radius: 10px;
+	flex-shrink: 0;
+ 
+	&.used {
+	  background-color: lightgray;
+	}
+ }
+ 
+ .categoryRow {
+	display: flex;
+	align-items: center;
+	margin-bottom: 20px;
+	width: 100%;
+	justify-content: center;
+ 
+	.categoryName {
+	  flex: 0 0 auto;
+	  width: 150px;
+	  font-weight: bold;
+	  text-align: center;
+	  padding: 10px;
+	  color: #fff;
+	  letter-spacing: 1px;
+	  background-color: #03564a;
+	  height: 70px;
+	  display: flex;
+	  align-items: center;
+	  justify-content: center;
+	  font-size: 22px;
+	  border-radius: 10px;
+	  margin-right: 20px;
+	  transition: background-color 0.3s ease; // Плавный переход цвета
+	}
+ 
+	.usedCategory {
+	  background-color: lightgray; // Новый цвет для измененной категории
+	}
+ }
+ 
+ .items {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: flex-start;
+	gap: 10px;
+ }

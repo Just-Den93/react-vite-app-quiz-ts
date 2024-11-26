@@ -1,0 +1,88 @@
+.card {
+	display: flex;
+	font-family: "Montserrat", sans-serif;
+	justify-content: space-between;
+	background-color: white;
+	border-radius: 5px;
+	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+	margin: 0 20px 20px 30px;
+	max-width: 1150px;
+ 
+	.image {
+	  width: 250px;
+	  height: 210px;
+	  margin: 5px 20px 5px 40px;
+	  border: 1px solid #ccc;
+	  border-radius: 5px;
+	  overflow: hidden;
+	  position: relative; // Добавлено для позиционирования плашки
+ 
+	  .imageContent {
+		 width: 100%;
+		 height: 100%;
+		 object-fit: cover;
+	  }
+ 
+	  .affiliationIcon {
+		 width: 150px;
+		 height: auto;
+		 display: inline-block;
+	  }
+ 
+	  .questionCount {
+		 font-size: 13px;
+		 position: absolute;
+		 bottom: 10px; // Позиционирование снизу
+		 right: 10px; // Позиционирование справа
+		 background-color: rgba(0, 0, 0, 0.7); // Прозрачный черный фон
+		 color: white;
+		 padding: 5px 10px;
+		 border-radius: 5px;
+		 font-weight: 600;
+	  }
+	}
+ 
+	.details {
+	  flex-grow: 1;
+	  display: flex;
+	  flex-direction: column;
+	  justify-content: space-between;
+	  margin: 40px 20px 0 0;
+ 
+	  h2 {
+		 font-size: 20px;
+		 font-weight: 600;
+		 color: #333333;
+	  }
+ 
+	  .bottomRow {
+		 display: flex;
+		 align-items: center;
+		 justify-content: space-between;
+ 
+		 .games {
+			font-size: 14px;
+			margin-right: 20px;
+			color: #333333;
+			font-weight: 600;
+		 }
+ 
+		 .startButton {
+			font-size: 16px;
+			padding: 10px 30px;
+			background-color: #007bff;
+			color: white;
+			font-weight: 600;
+			border: none;
+			border-radius: 5px;
+			cursor: pointer;
+			align-self: flex-end;
+			margin: 0 10px 10px 0;
+ 
+			&:hover {
+			  filter: saturate(2);
+			}
+		 }
+	  }
+	}
+ }

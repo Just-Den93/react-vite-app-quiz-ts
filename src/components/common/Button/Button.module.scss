@@ -1,0 +1,135 @@
+@use "sass:color";
+
+.button {
+	font-size: 24px;
+	padding: 10px 20px;
+	gap: 8px;
+	background-color: transparent;
+	color: #b8b7ad;
+	border: none;
+	border-radius: 5px;
+	cursor: pointer;
+	transition: all 0.3s ease;
+	display: inline-flex;
+	align-items: center;
+	justify-content: flex-start;
+	font-family: inherit;
+	width: 100%;
+ 
+	&:disabled {
+	  opacity: 0.6;
+	  cursor: not-allowed;
+	  filter: grayscale(100%);
+	}
+ 
+	&:hover:not(:disabled) {
+	  color: #ffffff;
+	  background-color: rgba(255, 255, 255, 0.1);
+	  padding-left: 25px;
+	}
+ 
+	&:focus-visible {
+	  outline: 2px solid white;
+	  outline-offset: 2px;
+	}
+ }
+ 
+ /* Общие стили для кнопок меню */
+ .continue,
+ .mainMenu,
+ .newGame,
+ .settings,
+ .timer {
+	font-size: 1.1rem;
+	font-weight: 700;
+	letter-spacing: 1px;
+	padding: 1rem;
+	opacity: 0;
+	transform: translateX(-20px);
+	animation: slideIn 0.3s ease forwards;
+ }
+ 
+ /* Индивидуальные задержки анимации */
+ .newGame {
+	animation-delay: 0.2s;
+ }
+ 
+ .continue {
+	animation-delay: 0.3s;
+ }
+ 
+ .mainMenu {
+	animation-delay: 0.4s;
+ }
+ 
+ .settings {
+	animation-delay: 0.5s;
+	border-bottom: none;
+ }
+ 
+ .timer {
+	animation-delay: 0.6s;
+	border-bottom: none;
+ }
+ 
+ @keyframes slideIn {
+	to {
+	  opacity: 1;
+	  transform: translateX(0);
+	}
+ }
+ 
+ /* Остальные стили для других типов кнопок */
+ .hint,
+ .selectCategory,
+ .showAnswer {
+	background-color: #03564a;
+	color: white;
+	font-weight: 700;
+	margin: 20px 0 50px;
+ 
+	&:hover:not(:disabled) {
+	  filter: saturate(2);
+	  transform: translateY(-1px);
+	  background-color: color.scale(#03564a, $lightness: -5%);
+	  padding-left: 20px;
+	}
+ }
+ 
+ /* Специфичные стили для кнопки таймера */
+ .startTimer {
+	padding: 10px;
+	background-color: #03564a;
+ }
+ 
+ .icon {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+ }
+ 
+ .timer .icon {
+	font-size: 24px;
+ }
+ 
+ /* Медиа-запросы для адаптивности */
+ @media (max-width: 768px) {
+	.button:not(.continue):not(.mainMenu):not(.newGame):not(.settings) {
+	  font-size: 20px;
+	  padding: 8px 16px;
+	}
+ }
+ 
+ /* Темная тема для не-меню кнопок */
+ @media (prefers-color-scheme: dark) {
+	.hint,
+	.selectCategory,
+	.showAnswer,
+	.startTimer {
+	  background-color: #046d5f;
+ 
+	  &:hover:not(:disabled) {
+		background-color: color.adjust(#046d5f, $lightness: 5%);
+	  }
+	}
+ }
