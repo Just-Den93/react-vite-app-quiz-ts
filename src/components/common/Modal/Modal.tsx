@@ -45,9 +45,9 @@ const Modal: React.FC<ModalProps> = ({
     'correct answer': block['correct answer'] ?? 'Ответ не указан',
   };
 
-  // Убираем рендеринг children и меняем условие рендеринга контента
   return (
-    <div className={`${styles.modal} ${styles.show}`} onClick={onClose}>
+    <div className={`${styles.modal} ${styles.show}`}>
+      <div className={styles.modalOverlay} onClick={onClose} />
       <div className={styles.modalContent} onClick={(e) => e.stopPropagation()}>
         <span className={styles.closeButton} onClick={onClose}>
           &times;
