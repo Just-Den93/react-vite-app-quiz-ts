@@ -1,6 +1,6 @@
+// gameModes.types.ts
 import type { FC } from 'react';
 
-// Определяем интерфейс для игрового блока
 export interface GameBlock {
   id: number;
   question: string;
@@ -10,23 +10,21 @@ export interface GameBlock {
   'correct answer': string;
 }
 
-// Пропсы для игровых режимов
 export interface GameModeProps {
   block: GameBlock;
   categoryName: string;
   showAnswer: boolean;
-  setTimerStarted: (value: boolean) => void;
-  timerStarted: boolean;
-  timerEnded: boolean;
-  handleTimerEnd: () => void;
-  handleShowAnswer: () => void;
+  setTimerStarted?: (value: boolean) => void;
+  timerStarted?: boolean;
+  timerEnded?: boolean;
+  handleTimerEnd?: () => void;
+  handleShowAnswer?: () => void;
   handleSelectCategory: (categoryId: string, blockId: number) => void;
-  handleForceStop: () => void;
+  handleForceStop?: () => void;
 }
 
 export type GameModeComponent = FC<GameModeProps>;
 
-// Конфигурация игрового режима
 export interface GameModeConfig {
   id: number;
   name: string;
