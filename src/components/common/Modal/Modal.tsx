@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
 import styles from './Modal.module.scss';
 import type { QuizBlock } from '../../../types/quiz.types';
 import type { GameModeProps, GameBlock } from '../../../types/gameModes.types';
@@ -18,7 +18,6 @@ interface ModalProps {
   warningMessage?: React.ReactNode;
   showTimer?: boolean;
   timerDuration?: number;
-  children?: React.ReactNode;
 }
 
 const Modal: React.FC<ModalProps> = ({
@@ -36,7 +35,22 @@ const Modal: React.FC<ModalProps> = ({
   showTimer,
   timerDuration = 30,
 }) => {
-  const [isModalOpen, setIsModalOpen] = useState(true);
+  const [isVisible, setIsVisible] = useState(false);
+  const [isClosing, setIsClosing] = useState(false);
+
+  useEffect(() => {
+    // Добавляем небольшую задержку для старта анимации появления
+    const timer = setTimeout(() => setIsVisible(true), 50);
+    return () => clearTimeout(timer);
+  }, []);
+
+  const handleClose = useCallback(() => {
+    setIsClosing(true);
+    // Ждем завершения анимации перед закрытием
+    setTimeout(() => {
+      onClose();
+    }, 500); // Длительность должна совпадать с CSS transition
+  }, [onClose]);
 
   if (!block && !showTimer) {
     return null;
@@ -53,15 +67,14 @@ const Modal: React.FC<ModalProps> = ({
       }
     : undefined;
 
-  const handleModalClose = () => {
-    setIsModalOpen(false);
-    onClose();
-  };
+  const modalClassName = `${styles.modal} ${isVisible ? styles.show : ''} ${
+    isClosing ? styles.hide : ''
+  }`;
 
   return (
-    <div className={`${styles.modal} ${isModalOpen ? styles.show : ''}`}>
+    <div className={modalClassName} onClick={handleClose}>
       <div className={styles.modalContent} onClick={(e) => e.stopPropagation()}>
-        <span className={styles.closeButton} onClick={handleModalClose}>
+        <span className={styles.closeButton} onClick={handleClose}>
           &times;
         </span>
         {showTimer ? (
