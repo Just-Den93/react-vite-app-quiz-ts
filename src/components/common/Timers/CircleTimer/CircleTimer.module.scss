@@ -1,12 +1,13 @@
 .circleTimer {
 	display: flex;
+	flex-direction: column;
 	justify-content: center;
 	align-items: center;
 	height: 100%;
  }
  
  .remainingTime {
-	font-size: 32px;
+	font-size: 55px;
 	font-weight: bold;
  }
  
@@ -24,4 +25,8 @@
 	100% {
 	  transform: scale(1);
 	}
+ }
+ 
+ .startButtonContainer {
+	margin-top: 20px;
  }

@@ -1,5 +1,4 @@
-// Modal.tsx
-import React from 'react';
+import React, { useState } from 'react';
 import styles from './Modal.module.scss';
 import type { QuizBlock } from '../../../types/quiz.types';
 import type { GameModeProps, GameBlock } from '../../../types/gameModes.types';
@@ -37,6 +36,8 @@ const Modal: React.FC<ModalProps> = ({
   showTimer,
   timerDuration = 30,
 }) => {
+  const [isModalOpen, setIsModalOpen] = useState(true);
+
   if (!block && !showTimer) {
     return null;
   }
@@ -52,14 +53,19 @@ const Modal: React.FC<ModalProps> = ({
       }
     : undefined;
 
+  const handleModalClose = () => {
+    setIsModalOpen(false);
+    onClose();
+  };
+
   return (
-    <div className={`${styles.modal} ${styles.show}`} onClick={onClose}>
+    <div className={`${styles.modal} ${isModalOpen ? styles.show : ''}`}>
       <div className={styles.modalContent} onClick={(e) => e.stopPropagation()}>
-        <span className={styles.closeButton} onClick={onClose}>
+        <span className={styles.closeButton} onClick={handleModalClose}>
           &times;
         </span>
         {showTimer ? (
-          <CircleTimer duration={timerDuration} onComplete={onClose} />
+          <CircleTimer duration={timerDuration} onComplete={() => {}} />
         ) : isBlockUsed ? (
           warningMessage
         ) : (
