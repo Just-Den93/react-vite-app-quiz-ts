@@ -1,29 +1,27 @@
 // src/hooks/useQuizData.ts
 import { useState, useEffect } from 'react';
-import { loadUniqueUuids } from '../../../utils/loadJsonData';
-import type { QuizData } from '../../../types/quiz.types';
+import type { QuizData, Category } from '../../../types/quiz.types';
 
-export const useQuizData = () => {
+export const useQuizData = (data: Category[] | null) => {
   const [quizData, setQuizData] = useState<QuizData[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const uniqueData = await loadUniqueUuids();
-        console.log('Завантажені дані тесту:', uniqueData);
-        setQuizData(uniqueData);
-      } catch (err) {
-        console.error('Помилка завантаження даних тесту:', err);
-        setError('Помилка завантаження даних');
-      } finally {
-        setIsLoading(false);
-      }
-    };
-
-    fetchData();
-  }, []);
+    if (data) {
+      const uniqueData: QuizData[] = [{
+        uuid: 'unique-quiz-id',
+        mode: 1,
+        name: 'Unique Quiz',
+        categories: data
+      }];
+      setQuizData(uniqueData);
+      setIsLoading(false);
+    } else {
+      setIsLoading(false);
+      setError('Помилка завантаження даних');
+    }
+  }, [data]);
 
   return { quizData, isLoading, error };
 };

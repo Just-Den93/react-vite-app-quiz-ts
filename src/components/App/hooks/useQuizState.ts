@@ -1,27 +1,26 @@
 // src/hooks/useQuizState.ts
 import { useEffect } from 'react';
-import { useQuizContext } from '../../../context/QuizContext';
+import { useUIContext } from '../../../context/UIContext';
 
-export const useQuizState = () => {
-  const { setCurrentQuizId, setSelectedMode, setShowQuizPage } = useQuizContext();
+export const useQuizState = (currentQuizId: string | null) => {
+  const { setCurrentQuizId, setSelectedMode, setShowQuizPage } = useUIContext();
 
   useEffect(() => {
-    const savedQuizId = localStorage.getItem('currentQuizId');
     const savedMode = localStorage.getItem('selectedMode');
     const savedShowQuizPage = localStorage.getItem('showQuizPage');
 
-    console.log('Збережений стан:', { savedQuizId, savedMode, savedShowQuizPage });
+    console.log("Состояние useQuizState:", { currentQuizId, savedMode, savedShowQuizPage });
+    console.log('Збережений стан:', { currentQuizId, savedMode, savedShowQuizPage });
 
-    if (savedShowQuizPage === 'true' && !savedQuizId) {
+    if (savedShowQuizPage === 'true' && !currentQuizId) {
       localStorage.removeItem('showQuizPage');
       setShowQuizPage(false);
       return;
     }
 
-    if (savedQuizId && savedMode) {
-      setCurrentQuizId(savedQuizId);
+    if (currentQuizId && savedMode) {
       setSelectedMode(Number(savedMode));
       setShowQuizPage(savedShowQuizPage === 'true');
     }
-  }, [setCurrentQuizId, setSelectedMode, setShowQuizPage]);
+  }, [currentQuizId, setSelectedMode, setShowQuizPage]);
 };

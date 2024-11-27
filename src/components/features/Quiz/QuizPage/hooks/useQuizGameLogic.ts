@@ -1,5 +1,6 @@
 import { useState, useCallback } from 'react';
-import { useQuizContext } from '../../../../../context/QuizContext';
+import { useDataContext } from '../../../../../context/DataContext';
+import { useUIContext } from '../../../../../context/UIContext';
 import { useModal } from '../../../../common/ModalManager/useModal';
 import { QuizBlock, Category } from '../../../../../types/quiz.types';
 
@@ -11,13 +12,8 @@ interface GameState {
 }
 
 export function useQuizGameLogic() {
-  const { 
-    quizStates, 
-    currentQuizId, 
-    markBlockAsUsed, 
-    setShowQuizPage,
-    setQuizStates  // Добавить это
-  } = useQuizContext();
+  const { quizStates, markBlockAsUsed,setQuizStates } = useDataContext();
+  const { setShowQuizPage, currentQuizId } = useUIContext();
   const { showModal, hideModal } = useModal();
 
   const [selectedBlock, setSelectedBlock] = useState<QuizBlock | null>(null);

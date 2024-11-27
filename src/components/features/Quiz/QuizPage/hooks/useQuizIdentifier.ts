@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
-import { useQuizContext } from '../../../../../context/QuizContext';
+import { useUIContext } from '../../../../../context/UIContext';
+import { useDataContext } from '../../../../../context/DataContext';
 import { loadUniqueUuids } from '../../../../../utils/loadJsonData';
 
 export const useQuizIdentifier = () => {
@@ -7,8 +8,10 @@ export const useQuizIdentifier = () => {
     setCurrentQuizId, 
     setSelectedMode, 
     setShowQuizPage,
+  } = useUIContext();
+  const { 
     setQuizStates 
-  } = useQuizContext();
+  } = useDataContext();
 
   useEffect(() => {
     // Восстанавливаем состояние из localStorage

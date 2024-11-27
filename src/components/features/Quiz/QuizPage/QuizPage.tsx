@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
-import { useQuizContext } from '../../../../context/QuizContext';
+import { useUIContext } from '../../../../context/UIContext';
+import { useDataContext } from '../../../../context/DataContext';
 import { useQuizGameLogic } from './hooks/useQuizGameLogic';
 import { useQuizIdentifier } from './hooks/useQuizIdentifier';
 import { useKeyboardEvents } from './hooks/useKeyboardEvents';
-import { ModalManager } from '../../../common/ModalManager/ModalManager';
+import ModalManager  from '../../../common/ModalManager/ModalManager';
 import { useModal } from '../../../common/ModalManager/useModal';
 import ContentContainer from '../../../layout/ContentContainer/ContentContainer';
 import BurgerMenu from '../../../common/MenuModal/BurgerMenu'
@@ -13,7 +14,8 @@ import { Category, QuizBlock } from '../../../../types/quiz.types';
 
 const QuizPage: React.FC = () => {
   const { hideModal } = useModal();
-  const { quizStates, currentQuizId, data } = useQuizContext();
+  const { quizStates, data } = useDataContext();
+  const { currentQuizId } = useUIContext();
   const [menuOpen, setMenuOpen] = useState(false);
   
   useQuizIdentifier();

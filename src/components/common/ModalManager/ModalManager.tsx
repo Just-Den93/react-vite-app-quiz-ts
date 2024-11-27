@@ -1,7 +1,7 @@
-import React, { useMemo } from 'react';
+import React from 'react';
 import { useModal } from './useModal';
 import { gameModeFactory } from './factories/gameModeFactory';
-import { useQuizContext } from '../../../context/QuizContext';
+import { useUIContext } from '../../../context/UIContext';
 import WarningMessage from '../../features/Game/Messages/WarningMessage/WarningMessage';
 import Modal from '../Modal/Modal';
 import { QuizBlock, Category } from '../../../types/quiz.types';
@@ -17,7 +17,7 @@ interface ModalManagerProps {
   onMainMenu: () => void; 
 }
 
-export const ModalManager: React.FC<ModalManagerProps> = ({
+const ModalManager: React.FC<ModalManagerProps> = ({
   selectedBlock,
   selectedCategory,
   isBlockUsed,
@@ -26,37 +26,20 @@ export const ModalManager: React.FC<ModalManagerProps> = ({
   onSelectCategory = () => {},
 }) => {
   const { modalState, hideModal } = useModal();
-  const { selectedMode } = useQuizContext();
-  const ModeComponent = gameModeFactory.getMode(selectedMode);
+  const { selectedMode } = useUIContext();
 
-  console.log('Mode Component:', ModeComponent, 'Selected Mode:', selectedMode);
-
-  // Убираем useMemo и меняем логику рендеринга
-  const defaultTimerState = {
-    timerStarted: false,
-    timerEnded: false
-  };
-
-  const defaultTimerHandlers = {
-    startTimer: () => {},
-    endTimer: () => {},
-    resetTimer: () => {}
-  };
-
-  const defaultAnswerState = {
-    showAnswer: false
-  };
-
-  const defaultAnswerHandlers = {
-    showAnswer: () => {},
-    hideAnswer: () => {}
-  };
+  // Get the correct mode component based on selectedMode
+  const ModeComponent = React.useMemo(() => {
+    const component = gameModeFactory.getMode(selectedMode);
+    console.log('Selected Mode:', selectedMode);
+    console.log('Mode Component:', component);
+    return component;
+  }, [selectedMode]);
 
   if (!modalState.modal) {
     return null;
   }
 
-  // Добавляем дополнительную проверку на блок и категорию
   if (!selectedBlock || !selectedCategory) {
     return null;
   }
@@ -65,12 +48,22 @@ export const ModalManager: React.FC<ModalManagerProps> = ({
     <Modal
       block={selectedBlock}
       categoryName={selectedCategory?.name ?? 'Без категории'}
-      onClose={() => hideModal('modal')}
+      onClose={() => {
+        hideModal('modal');
+        onModalClose();
+      }}
       modeComponent={ModeComponent || (() => <div>Режим не определён</div>)}
-      timerState={defaultTimerState}
-      timerHandlers={defaultTimerHandlers}
-      answerState={defaultAnswerState}
-      answerHandlers={defaultAnswerHandlers}
+      timerState={{ timerStarted: false, timerEnded: false }}
+      timerHandlers={{
+        startTimer: () => {},
+        endTimer: () => {},
+        resetTimer: () => {}
+      }}
+      answerState={{ showAnswer: false }}
+      answerHandlers={{
+        showAnswer: () => {},
+        hideAnswer: () => {}
+      }}
       onSelectCategory={onSelectCategory}
       isBlockUsed={isBlockUsed}
       warningMessage={
@@ -84,4 +77,4 @@ export const ModalManager: React.FC<ModalManagerProps> = ({
   );
 };
 
-export default ModalManager;
+export default React.memo(ModalManager);

@@ -2,7 +2,8 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import styles from './App.module.scss';
-import { useQuizContext } from '../../context/QuizContext';
+import { useUIContext } from '../../context/UIContext';
+import { useDataContext } from '../../context/DataContext';
 import { useQuizData } from './hooks/useQuizData';
 import { useQuizState } from './hooks/useQuizState';
 import { startQuizHandler } from './appUtils';
@@ -18,12 +19,15 @@ interface AppProps {
     categories: QuizData['categories'];
   }>;
   QuizPage: React.ComponentType;
+  selectedMode: number;
+  currentQuizId: string;
 }
 
-const App: React.FC<AppProps> = ({ Sidebar, QuizCard, QuizPage }) => {
-  const { showQuizPage, setShowQuizPage, setSelectedMode, setCurrentQuizId, currentQuizId } = useQuizContext();
-  const { quizData, isLoading, error } = useQuizData();
-  useQuizState();
+const App: React.FC<AppProps> = ({ Sidebar, QuizCard, QuizPage, selectedMode, currentQuizId }) => {
+  const { showQuizPage, setShowQuizPage, setSelectedMode, setCurrentQuizId } = useUIContext();
+  const { data } = useDataContext();
+  const { quizData, isLoading, error } = useQuizData(data);
+  useQuizState(currentQuizId);
 
   if (isLoading) {
     return <div>Загрузка...</div>;

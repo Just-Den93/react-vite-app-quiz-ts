@@ -2,7 +2,8 @@ import React from 'react';
 import styles from './Item.module.scss';
 import { useModal } from '../../../common/ModalManager/useModal';
 import { QuizBlock } from '../../../../types/quiz.types';
-import { useQuizContext } from '../../../../context/QuizContext';
+import { useDataContext } from '../../../../context/DataContext';
+import { useUIContext } from '../../../../context/UIContext';
 import { checkIfUsed, handleBlockClick } from './itemUtils';
 
 interface ItemProps {
@@ -14,8 +15,9 @@ interface ItemProps {
 
 const Item: React.FC<ItemProps> = ({ block, categoryId, onBlockSelect, isUsed }) => {
   const { showModal } = useModal();
-  const { quizStates, currentQuizId } = useQuizContext();
-  const isBlockUsed = checkIfUsed(quizStates, currentQuizId, categoryId, block.id); // Используем вынесенную функцию
+  const { quizStates } = useDataContext();
+  const { currentQuizId } = useUIContext();
+  const isBlockUsed = checkIfUsed(quizStates, currentQuizId, categoryId, block.id);
 
   const handleClick = () => {
     console.log('Item clicked, showing modal');  // Добавим для отладки
