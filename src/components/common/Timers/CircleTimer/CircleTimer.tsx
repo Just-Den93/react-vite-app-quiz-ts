@@ -23,6 +23,8 @@ const CircleTimer: React.FC<CircleTimerProps> = ({ duration, onComplete }) => {
         colors={['#004777', '#F7B801', '#A30000', '#A30000']}
         colorsTime={[7, 5, 2, 0]}
         onComplete={onComplete}
+        size={300}
+        strokeWidth={20}
       >
         {({ remainingTime }) => {
           const isPulse = remainingTime <= 5;
